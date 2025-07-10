@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>タスクリスト</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}" />
+    </head>
+
+    <body>
+        <div>
+            <h1>TODOリスト</h1>
+            <form th:action="@{/add}" method="post">
+                <input type="date" name="expiration_date" />
+                <input type="text" name="todo_item" />
+                <input type="submit" value="追加" />
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>期限日</th>
+                        <th>項目</th>
+                        <th>未完了</th>
+                        <th>完了</th>
+                        <th>削除</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="task : ${taskList}">
+                        <form action="" method="POST">
+                            <input type="hidden" name="id" th:value="${task.id}"/>
+                            <td th:text="${task.expirationDate}"></td>
+                            <td th:text="${task.taskItem}" th:classappend="${task.isCompleted == 1} ? 'completed-task' : ''"></td>
+                            <td>
+                                <input
+                                    type="radio"
+                                    name="is_completed"
+                                    value="0"
+                                    checked
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="radio"
+                                    name="is_completed"
+                                    value="1"
+                                />
+                            </td>
+                            <td><input type="checkbox" name="is_deleted" /></td>
+                            <td><input type="submit" value="実行" /></td>
+                        </form>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
